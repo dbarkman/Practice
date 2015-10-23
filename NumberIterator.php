@@ -6,16 +6,27 @@
  * Time: 5:28 PM
  */
 
+namespace Numbers;
+
 class NumberIterator {
 
-	public function __constructor() {
+	private $_number;
+	private $_intArray = array();
+
+	public function __constructor($firstNumber) {
+		$this->_number = $firstNumber;
 	}
 
-	public function createIntArray($finalValueOfNumber) {
+	public function getNumber() {
+		return $this->_number;
+	}
+
+	public function createIntArray($lastNumber) {
 		$this->_intArray[count($this->_intArray)] = $this->_number;
-		if ($this->_number < $finalValueOfNumber) {
+		if ($this->_number < $lastNumber) {
 			$this->_number++;
-			self::createIntArray($finalValueOfNumber);
+			self::createIntArray($lastNumber);
 		}
+		return $this->_intArray;
 	}
 }

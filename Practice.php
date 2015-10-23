@@ -6,33 +6,23 @@
  * Time: 4:22 PM
  */
 
-if (count($argv) < 3) {
-	echo "practice usage: php -f Practice.php 'starting value' 'final value'\n";
-	exit(1);
-} else if (!is_numeric($argv[1]) && !is_numeric($argv[2])) {
-	echo "starting value and final value must be of type int\n";
-	exit(1);
-}
+namespace Practice;
+use Numbers;
 
-$practice = new Practice();
-$practice->setNumber($argv[1]);
-$practice->createIntArray($argv[2]);
-echo $practice->getNumber() . "\n";
-$intArray = $practice->getIntArray();
-foreach ($intArray as $number) {
-	echo $number . "\n";
-}
+require_once("NumberIterator.php");
 
 class Practice {
 
 	private $_number;
 	private $_intArray = array();
+	private $_numIt;
 
 	public function __construct() {
+		$this->_numIt = new Numbers\NumberIterator($this->_number);
 	}
 
 	public function getNumber() {
-		return $this->_number;
+		return $this->_numIt->getNumber();
 	}
 	public function setNumber($number) {
 		$this->_number = $number;
@@ -46,10 +36,6 @@ class Practice {
 	}
 
 	public function createIntArray($finalValueOfNumber) {
-		$this->_intArray[count($this->_intArray)] = $this->_number;
-		if ($this->_number < $finalValueOfNumber) {
-			$this->_number++;
-			self::createIntArray($finalValueOfNumber);
-		}
+		$this->_intArray = $this->_numIt->createIntArray($finalValueOfNumber);
 	}
 }
